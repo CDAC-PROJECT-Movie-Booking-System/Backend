@@ -20,26 +20,26 @@ import com.app.repository.UserEntityRepository;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserEntityRepository userRepository;
-	
+
 	@Autowired
 	private ModelMapper mapper;
-	
-	
+
+
 	@Override
 	public ApiResponse userRegistration(Signup signup) {
 		UserEntity user = mapper.map(signup, UserEntity.class);
-	
+
 		userRepository.save(user);
 		UserEntity user1=new UserEntity();
-		
-		return new ApiResponse("User Registered Successfully" );
+
+		return new ApiResponse("success");
 	}
 
 
 	@Override
 	public List<UserEntity> getAllUser() {
-		
-		
+
+
 		return userRepository.findAll();
 	}
 
@@ -47,13 +47,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public SigninResponse authenticateUser(SigninRequest dto) {
 		// 1.invoke dao 's method
-		UserEntity user = userRepository.findByEmailAndPassword(
-						dto.getEmail(), dto.getPassword())
-						.orElseThrow(() -> 
-						new AuthenticationException("Invalid Email or Password !!!!!!"));
-				//valid login -user : persistent -> entity -> dto
-				return mapper.map(user, SigninResponse.class);
+		UserEntity user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword())
+				.orElseThrow(() -> 
+				new AuthenticationException("Fail"));
+		//valid login -user : persistent -> entity -> dto
+		SigninResponse sir =  mapper.map(user, SigninResponse.class);
+		sir.setMessage("success");
+		return sir;
 	}
-	
+
 
 }

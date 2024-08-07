@@ -18,5 +18,5 @@ public class SigninResponse {
 	private String lastName;
 	private String email;	
 	private UserRole role;
-	private String mesg;
+	private String message;
 }
