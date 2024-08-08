@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.app.custom_exceptions.AuthenticationException;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dto.ApiResponse;
 
@@ -49,8 +50,14 @@ public class GlobalExceptionHandler {
 			return map;
 		}
 		
-		
-		
+
+		// User Authentication
+		 @ExceptionHandler(AuthenticationException.class)
+		    public ResponseEntity<?> handleValidationExceptions(AuthenticationException ex) {
+			 System.out.println("in authentication exc ");
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ex.getMessage()));
+		    }
+
 
 		    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 		    public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {

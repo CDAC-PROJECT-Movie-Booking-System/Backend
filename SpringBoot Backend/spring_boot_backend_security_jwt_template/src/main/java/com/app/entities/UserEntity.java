@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,16 +23,20 @@ import lombok.ToString;
 public class UserEntity extends BaseEntity {
 	@Column(length = 20)
 	private String firstName;
-	
 	@Column(length = 20)
 	private String lastName;
 	@Column(length = 30, unique = true)
 	private String email;
-//	@Column(length = 300, nullable = f alse)
+	@Column(length = 15)
 	private String password;
 	@Enumerated(EnumType.STRING)
-	@Column(length = 30)
+	@Column(columnDefinition = "varchar(20) default 'ROLE_USER'")
 	private UserRole role;
-	
+	@PrePersist
+    public void prePersist() {
+        if (this.role == null) {
+            this.role = UserRole.ROLE_USER; 
+        }
+    }
 
 }
