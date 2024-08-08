@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.custom_exceptions.AuthenticationException;
 import com.app.dto.ApiResponse;
 import com.app.dto.SigninRequest;
 import com.app.dto.Signup;
@@ -52,6 +53,6 @@ public class UserController {
 		System.out.println("service "+userService);
 		return ResponseEntity.ok(
 				userService.authenticateUser(request));
-
+		
 	}
 }
