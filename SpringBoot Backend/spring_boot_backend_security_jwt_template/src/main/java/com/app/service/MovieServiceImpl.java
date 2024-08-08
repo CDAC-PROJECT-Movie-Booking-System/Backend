@@ -1,9 +1,13 @@
 package com.app.service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,6 +56,7 @@ public class MovieServiceImpl implements MovieService {
 	 @Override
 	    public MovieDTO get(Long movieId) {
 	        Movies movie = movieRepo.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie not found of given Id !!"));
+	        
 	        return mapper.map(movie, MovieDTO.class);
 	    }
 	 
@@ -60,16 +65,59 @@ public class MovieServiceImpl implements MovieService {
 
 	        //fetch the Movie of given id
 	        Movies Movie = movieRepo.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie not found of given Id !!"));
+	        System.out.println("movie dto name"+ Movie.toString());
 	        Movie.setMName(movieDto.getMName());
-	        Movie.setMDescription(movieDto.getMDesc());
-	        Movie.setMRating(movieDto.getRating());
+//	        System.out.println("movie name"+Movie.getMName()+);
+	        Movie.setMDescription(movieDto.getMDescription());
+	        Movie.setMRating(movieDto.getMRating());
 //	      
 	        Movie.setMovieImageName(movieDto.getMovieImageName());
+	        System.out.println("movie name"+ Movie.toString());
 
 //	        save the entity
 	        Movies updatedMovie = movieRepo.save(Movie);
 	        return mapper.map(updatedMovie, MovieDTO.class);
 	    }
+	 
+	 
+	 
+	 
+	 @Override
+		public List<MovieDTO> getAllMovies(int pageNumber, int pageSize) {
+			// Creates a PageRequest(imple class of Pageable : i/f for pagination)
+			// based upon page no n size
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			// fetches the Page of Emps --> getContent() --> List<Emp>
+			List<Movies> movieList = movieRepo.findAll(pageable).getContent();
+			return movieList.
+					stream() //Stream<Emp>
+					//Stream i/f method - map(Function mapperFunction)
+					.map(emp -> mapper.map(emp, MovieDTO.class)) //Stream<dto>
+					.collect(Collectors.toList());
+		}
+	 
+	 
+//	 @Override
+//	    public MovieDTO get(Long movieId) {
+//	        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product not found of given Id !!"));
+//	        return mapper.map(product, ProductDto.class);
+//	    }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	
 
 }

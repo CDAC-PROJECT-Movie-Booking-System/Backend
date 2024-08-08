@@ -2,6 +2,7 @@ package com.app.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +36,7 @@ public class MoviesImageTestController {
     @Value("${product.image.path}")
     private String imagePath;
     
-  //upload image
+  // upload image
 //    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/image/{movieId}")
     public ResponseEntity<ImageResponse> uploadMovieImage(
@@ -52,7 +53,7 @@ public class MoviesImageTestController {
     }
 
 
-    //serve image
+    // get or serve image
 
     @GetMapping(value = "/image/{productId}")
     public void serveUserImage(@PathVariable Long productId, HttpServletResponse response) throws IOException {
@@ -62,5 +63,36 @@ public class MoviesImageTestController {
         StreamUtils.copy(resource, response.getOutputStream());
 
     }
+    
+    
+ // 8. Pagination demo
+ 	// Get all emps , paginated
+ 	// http://host:port/employees , method=GET
+ 	// req params : pageNumber , def val 0 , optional
+ 	// pageSize : def val 3 , optional
+
+ 	@GetMapping
+ 	(value="/pagenumber/{pageNumber}")
+ 	public ResponseEntity<?> getAllEmpsPaginated(
+// 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
+ 			@PathVariable(required = false) int pageNumber,
+ 			@RequestParam(defaultValue = "3", required = false) int pageSize) {
+ 		System.out.println("in get all emps " + pageNumber + " " + pageSize);
+ 		List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
+ 		if (list.isEmpty())
+ 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+ 		// emps found
+ 		return ResponseEntity.ok(list);
+ 	}
+ 	
+ 	// get movie by id
+ 	
+ 	@GetMapping("/{movieId}")
+    public ResponseEntity<MovieDTO> getProduct(@PathVariable Long movieId) {
+ 		MovieDTO moviedto = mservice.get(movieId);
+        return new ResponseEntity<>(moviedto, HttpStatus.OK);
+    }
+    
+    
     
 }
