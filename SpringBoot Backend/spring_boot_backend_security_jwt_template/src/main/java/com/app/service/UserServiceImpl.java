@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		// 1.invoke dao 's method
 		UserEntity user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword())
 				.orElseThrow(() -> 
-				new AuthenticationException("Fail"));
+				new AuthenticationException("Email or Password Incorrect"));
 		//valid login -user : persistent -> entity -> dto
 		SigninResponse sir =  mapper.map(user, SigninResponse.class);
 		sir.setMessage("success");
