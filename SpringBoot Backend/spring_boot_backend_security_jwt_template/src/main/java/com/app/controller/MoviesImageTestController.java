@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import com.app.service.MovieService;
 
 @RestController
 @RequestMapping("/moviestest")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MoviesImageTestController {
 	@Autowired
 	private MovieService mservice;
@@ -76,7 +78,7 @@ public class MoviesImageTestController {
  	public ResponseEntity<?> getAllEmpsPaginated(
 // 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
  			@PathVariable(required = false) int pageNumber,
- 			@RequestParam(defaultValue = "3", required = false) int pageSize) {
+ 			@RequestParam(defaultValue = "4", required = false) int pageSize) {
  		System.out.println("in get all emps " + pageNumber + " " + pageSize);
  		List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
  		if (list.isEmpty())
