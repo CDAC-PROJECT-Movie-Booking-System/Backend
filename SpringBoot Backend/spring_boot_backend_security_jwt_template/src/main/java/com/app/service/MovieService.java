@@ -20,6 +20,6 @@ public interface MovieService {
 
 	List<MovieDTO> getAllMovies(int pageNumber, int pageSize);
 	
-	
+	List<MovieDTO> getMoviesCount();
 //	MovieDTO update(MovieDTO movieDto, Long movieId)
 }

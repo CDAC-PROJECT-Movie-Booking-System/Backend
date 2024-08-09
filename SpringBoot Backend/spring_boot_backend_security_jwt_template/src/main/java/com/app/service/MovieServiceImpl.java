@@ -89,6 +89,7 @@ public class MovieServiceImpl implements MovieService {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
 			// fetches the Page of Emps --> getContent() --> List<Emp>
 			List<Movies> movieList = movieRepo.findAll(pageable).getContent();
+			
 			return movieList.
 					stream() //Stream<Emp>
 					//Stream i/f method - map(Function mapperFunction)
@@ -96,6 +97,15 @@ public class MovieServiceImpl implements MovieService {
 					.collect(Collectors.toList());
 		}
 	 
+	 
+	 public List<MovieDTO> getMoviesCount(){
+		 
+		 return movieRepo.findAll().stream() //Stream<Emp>
+					//Stream i/f method - map(Function mapperFunction)
+					.map(emp -> mapper.map(emp, MovieDTO.class)) //Stream<dto>
+					.collect(Collectors.toList());
+		 
+	 }
 	 
 //	 @Override
 //	    public MovieDTO get(Long movieId) {

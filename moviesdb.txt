@@ -1,5 +1,5 @@
 
-queries of demo movies without images
+--queries of demo movies without images
 
 INSERT INTO movies (m_description, m_name, m_rating) 
 VALUES 

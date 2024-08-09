@@ -85,6 +85,22 @@ public class MoviesImageTestController {
  		return ResponseEntity.ok(list);
  	}
  	
+ 	
+ 	// get ovies count
+ 	@GetMapping
+ 	(value="/totalsize")
+ 	public ResponseEntity<?> getMoviesCount(
+// 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
+ 			) {
+ 		
+ 		List<MovieDTO> list = mservice.getMoviesCount();
+ 		if (list.isEmpty())
+ 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+ 		// emps found
+ 		return ResponseEntity.ok(list.size());
+ 	}
+ 	
+ 	
  	// get movie by id
  	
  	@GetMapping("/{movieId}")
