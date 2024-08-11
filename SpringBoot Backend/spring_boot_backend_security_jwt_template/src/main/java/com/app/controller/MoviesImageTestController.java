@@ -88,7 +88,7 @@ public class MoviesImageTestController {
  	}
  	
  	
- 	// get ovies count
+ 	// get movies count
  	@GetMapping
  	(value="/totalsize")
  	public ResponseEntity<?> getMoviesCount(
