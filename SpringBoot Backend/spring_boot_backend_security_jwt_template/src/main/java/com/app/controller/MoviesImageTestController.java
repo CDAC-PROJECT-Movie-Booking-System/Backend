@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ImageResponse;
 import com.app.dto.MovieDTO;
+import com.app.dto.PaginatedMoviesResponse;
 import com.app.service.FileService;
 import com.app.service.MovieService;
 
@@ -73,18 +74,38 @@ public class MoviesImageTestController {
  	// req params : pageNumber , def val 0 , optional
  	// pageSize : def val 3 , optional
 
- 	@GetMapping
- 	(value="/pagenumber/{pageNumber}")
+// 	@GetMapping
+// 	(value="/pagenumber/{pageNumber}")
+// 	public ResponseEntity<?> getAllEmpsPaginated(
+//// 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
+// 			@PathVariable(required = false) int pageNumber,
+// 			@RequestParam(defaultValue = "4", required = false) int pageSize) {
+// 		System.out.println("in get all emps " + pageNumber + " " + pageSize);
+// 		List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
+// 		if (list.isEmpty())
+// 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+// 		// emps found
+// 		return ResponseEntity.ok(list);
+// 	}
+ 	@GetMapping(value = "/pagenumber/{pageNumber}")
  	public ResponseEntity<?> getAllEmpsPaginated(
-// 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
- 			@PathVariable(required = false) int pageNumber,
- 			@RequestParam(defaultValue = "4", required = false) int pageSize) {
- 		System.out.println("in get all emps " + pageNumber + " " + pageSize);
- 		List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
- 		if (list.isEmpty())
- 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
- 		// emps found
- 		return ResponseEntity.ok(list);
+ 	        @PathVariable(required = false) int pageNumber,
+ 	        @RequestParam(defaultValue = "4", required = false) int pageSize) {
+
+ 	    System.out.println("in get all emps " + pageNumber + " " + pageSize);
+
+ 	    // Get paginated list of movies
+ 	    List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
+
+ 	    // Get total count of movies
+ 	    long totalMovies = mservice.getTotalMoviesCount();
+
+ 	    if (list.isEmpty())
+ 	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+ 	    // Return both list of movies and total count
+ 	    PaginatedMoviesResponse response = new PaginatedMoviesResponse(list, totalMovies);
+ 	    return ResponseEntity.ok(response);
  	}
  	
  	

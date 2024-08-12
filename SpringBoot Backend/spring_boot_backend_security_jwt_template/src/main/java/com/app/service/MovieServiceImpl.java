@@ -106,6 +106,12 @@ public class MovieServiceImpl implements MovieService {
 					.collect(Collectors.toList());
 		 
 	 }
+
+// Paginated Response
+	@Override
+	public long getTotalMoviesCount() {
+		 return movieRepo.count();
+	}
 	 
 //	 @Override
 //	    public MovieDTO get(Long movieId) {
