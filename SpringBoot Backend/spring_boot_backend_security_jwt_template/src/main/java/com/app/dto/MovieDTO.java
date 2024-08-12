@@ -18,22 +18,19 @@ import lombok.ToString;
 @AllArgsConstructor
 public class MovieDTO {
 
-	
-	@JsonProperty(access = Access.READ_ONLY)
+	//@JsonProperty(access = Access.READ_ONLY)
 	private Long id;
-	@NotBlank
 	private String mName;
-	@NotBlank
-	private String mDesc;
-	private int rating;
+	private String mDescription;
+	private int mRating;
 	private String movieImageName;
 	
-	public MovieDTO(@NotBlank String mName, @NotBlank String mDesc, int rating) {
-		super();
-		this.mName = mName;
-		this.mDesc = mDesc;
-		this.rating = rating;
-	}
+//	public MovieDTO(@NotBlank String mName, @NotBlank String mDesc, int rating) {
+//		super();
+//		this.mName = mName;
+//		this.mDesc = mDesc;
+//		this.rating = rating;
+//	}
 	
 	   
 }

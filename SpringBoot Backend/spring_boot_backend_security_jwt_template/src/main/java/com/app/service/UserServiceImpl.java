@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 		UserEntity user = mapper.map(signup, UserEntity.class);
 
 		userRepository.save(user);
-		UserEntity user1=new UserEntity();
+		//UserEntity user1=new UserEntity();
 
 		return new ApiResponse("success");
 	}
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		// 1.invoke dao 's method
 		UserEntity user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword())
 				.orElseThrow(() -> 
-				new AuthenticationException("Email or Password Incorrect"));
+				new AuthenticationException("Fail"));
 		//valid login -user : persistent -> entity -> dto
 		SigninResponse sir =  mapper.map(user, SigninResponse.class);
 		sir.setMessage("success");
