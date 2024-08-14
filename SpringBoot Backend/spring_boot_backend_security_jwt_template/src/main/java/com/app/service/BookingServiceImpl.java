@@ -1,6 +1,6 @@
 package com.app.service;
 
-import com.app.entities.Booking;
+import com.app.entities.BookingEntity;
 import com.app.entities.SeatEntity;
 import com.app.entities.ShowtimesEntity;
 import com.app.entities.UserEntity;
@@ -32,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
     private UserEntityRepository userRepository;
 
     @Override
-    public Booking bookSeats(Long userId, List<Integer> seatNos, Long movieId, Long showtimeId) {
+    public BookingEntity bookSeats(Long userId, List<Integer> seatNos, Long movieId, Long showtimeId) {
         // Fetch the user
         Optional<UserEntity> userOpt = userRepository.findById(userId);
         if (!userOpt.isPresent()) {
@@ -63,7 +63,7 @@ public class BookingServiceImpl implements BookingService {
         seatRepository.saveAll(seats);
 
         // Create booking
-        Booking booking = new Booking();
+        BookingEntity booking = new BookingEntity();
         booking.setUser(user);
         bookingRepository.save(booking);
 

@@ -23,6 +23,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 public class ShowtimesEntity extends BaseEntity {
 
     private LocalTime showStartTime;

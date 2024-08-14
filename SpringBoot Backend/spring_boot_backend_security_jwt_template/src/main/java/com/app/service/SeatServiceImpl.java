@@ -1,12 +1,13 @@
 package com.app.service;
 
-import com.app.entities.SeatEntity;
-import com.app.entities.ShowtimesEntity;
-import com.app.repository.SeatRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.app.dto.SeatDTO;
+import com.app.entities.SeatEntity;
+import com.app.entities.ShowtimesEntity;
 
 @Service
 public class SeatServiceImpl implements SeatService {
@@ -22,5 +23,12 @@ public class SeatServiceImpl implements SeatService {
     // Get a seat by seatNo and showtime
     public SeatEntity getSeatBySeatNoAndShowtime(int seatNo, ShowtimesEntity showtime) {
         return seatRepository.findBySeatNoAndShowtime(seatNo, showtime);
+    }
+    
+    //Update seats
+    public void updateSeats(List<SeatDTO> seats) {
+        for (SeatDTO seat : seats) {
+            seatRepository.updateSeatAvailability(seat.getId(), seat.getIsSeatAvailable());
+        }
     }
 }
