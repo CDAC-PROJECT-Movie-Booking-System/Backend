@@ -20,4 +20,6 @@ public interface UserService {
 	List<UserEntity> getAllUser();
 	
 	SigninResponse authenticateUser(SigninRequest dto);
+	
+	public SigninResponse findByemailservice(SigninRequest dto);
 }

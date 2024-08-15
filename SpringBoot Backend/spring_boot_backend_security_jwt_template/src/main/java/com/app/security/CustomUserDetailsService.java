@@ -22,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		UserEntity user = userRepo.findByEmail(email)
 				.orElseThrow(() -> 
 				new UsernameNotFoundException("Email not found !!!!!"));
+		System.out.println("Loaded user: " + user);
 		//=> user email exists - user : persistent
 		/*
 		 * In case of email found -- this method has to ret UserDetails object filled with details lifted from DB
