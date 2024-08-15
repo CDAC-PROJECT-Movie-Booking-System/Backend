@@ -97,6 +97,6 @@ public class UserController {
 				(jwtUtils.generateJwtToken(verifiedToken),
 				"Successful Auth!!!!");
 		return ResponseEntity.
-				status(HttpStatus.CREATED).body(resp);
+				status(HttpStatus.OK).body(resp);
 	}
 }
