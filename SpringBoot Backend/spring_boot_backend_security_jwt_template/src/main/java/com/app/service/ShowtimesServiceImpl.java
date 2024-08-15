@@ -1,4 +1,3 @@
-// ShowtimesService.java
 package com.app.service;
 
 import com.app.dto.SeatDTO; 
@@ -14,6 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.dto.ShowtimeRequestDTO;
 
 @Service
 @Transactional
@@ -38,6 +42,14 @@ public class ShowtimesServiceImpl implements ShowtimesService {
     //@Transactional
     public List<SeatDTO> getSeatsForShowtime(Long movieId, Long showtimeId) {
         return showtimesRepository.findSeatsByMovieIdAndShowtimeId(movieId, showtimeId);
+    }
+    
+    public Optional<ShowtimesEntity> getShowtimeByCriteria(ShowtimeRequestDTO requestDTO) {
+        return showtimesRepository.findByShowDateAndShowStartTimeAndShowEndTime(
+                requestDTO.getShowDate(), 
+                requestDTO.getShowStartTime(), 
+                requestDTO.getShowEndTime()
+        );
     }
 }
 

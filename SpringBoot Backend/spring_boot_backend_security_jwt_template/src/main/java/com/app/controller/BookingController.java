@@ -1,6 +1,6 @@
 package com.app.controller;
 
-import com.app.entities.Booking;
+import com.app.entities.BookingEntity;
 import com.app.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<Booking> bookSeats(
+    public ResponseEntity<BookingEntity> bookSeats(
             @RequestParam Long userId,
             @RequestParam List<Integer> seatNos,
             @RequestParam Long movieId,
             @RequestParam Long showtimeId) {
-        Booking booking = bookingService.bookSeats(userId, seatNos, movieId, showtimeId);
+        BookingEntity booking = bookingService.bookSeats(userId, seatNos, movieId, showtimeId);
         return ResponseEntity.ok(booking);
     }
 }

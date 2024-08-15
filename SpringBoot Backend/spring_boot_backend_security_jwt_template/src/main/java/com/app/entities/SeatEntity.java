@@ -19,6 +19,7 @@ import lombok.ToString;
 public class SeatEntity extends BaseEntity {
 
     private int seatNo;
+    
     private Boolean isSeatAvailable;
     
     @ManyToOne
