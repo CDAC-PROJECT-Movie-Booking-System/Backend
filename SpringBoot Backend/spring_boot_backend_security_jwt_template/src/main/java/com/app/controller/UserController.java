@@ -104,6 +104,6 @@ public class UserController {
 //		resp.setEmail(sir.getEmail());
 //		resp.setId(sir.getId());
 		return ResponseEntity.
-				status(HttpStatus.CREATED).body(resp);
+				status(HttpStatus.OK).body(resp);
 	}
 }

@@ -11,7 +11,7 @@ import com.app.entities.UserEntity;
 
 public class CustomUserDetails implements UserDetails {
 	private UserEntity user;
-
+	
 	public CustomUserDetails(UserEntity user) {
 		super();
 		this.user = user;
