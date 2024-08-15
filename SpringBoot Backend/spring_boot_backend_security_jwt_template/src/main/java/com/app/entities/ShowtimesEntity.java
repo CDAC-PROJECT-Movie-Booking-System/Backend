@@ -3,6 +3,7 @@ package com.app.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class ShowtimesEntity extends BaseEntity {
     private Movies movie;
     
     @OneToMany(mappedBy = "showtime", fetch = FetchType.EAGER)
-    private Set<SeatEntity> seats;
+    private Set<SeatEntity> seats=new HashSet<>();
     
     
 

@@ -1,4 +1,3 @@
-// UserEntity.java
 package com.app.entities;
 
 import javax.persistence.*;

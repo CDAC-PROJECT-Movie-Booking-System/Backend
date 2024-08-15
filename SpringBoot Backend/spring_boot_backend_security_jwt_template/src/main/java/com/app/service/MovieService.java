@@ -22,4 +22,6 @@ public interface MovieService {
 	
 	List<MovieDTO> getMoviesCount();
 //	MovieDTO update(MovieDTO movieDto, Long movieId)
+
+	long getTotalMoviesCount();
 }

@@ -15,7 +15,7 @@ import com.app.entities.UserEntity;
 public interface UserService {
 	//add signup method
 	
-	ApiResponse userRegistration(Signup signup);
+	Signup userRegistration(Signup signup);
 	
 	List<UserEntity> getAllUser();
 	
