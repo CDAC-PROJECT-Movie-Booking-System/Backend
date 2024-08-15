@@ -18,7 +18,7 @@ public class SeatController {
 
     @Autowired
     private SeatServiceImpl seatService;
-
+// updating seats to database
     @PostMapping("/update-seats")
     public ResponseEntity<Void> updateSeats(@RequestBody SeatUpdateRequest seatUpdateRequest) {
         seatService.updateSeats(seatUpdateRequest.getSeats());
