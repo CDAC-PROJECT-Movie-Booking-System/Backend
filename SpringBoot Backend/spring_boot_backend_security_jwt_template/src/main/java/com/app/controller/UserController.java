@@ -93,9 +93,16 @@ public class UserController {
 		//=> authentication n authorization  successful !
 		System.out.println(verifiedToken.getPrincipal().getClass());//custom user details object
 		//create JWT n send it to the clnt in response
+		SigninResponse sir=userService.findByemailservice(request);
 		SigninResponse resp=new SigninResponse
-				(jwtUtils.generateJwtToken(verifiedToken),
+				(jwtUtils.generateJwtToken(verifiedToken),sir.getId(),sir.getFirstName(),sir.getLastName(),sir.getEmail(),sir.getRole(),
 				"Successful Auth!!!!");
+		
+//		resp.setFirstName(sir.getFirstName());
+//		resp.setLastName(sir.getFirstName());
+//		resp.setRole(sir.getRole());
+//		resp.setEmail(sir.getEmail());
+//		resp.setId(sir.getId());
 		return ResponseEntity.
 				status(HttpStatus.CREATED).body(resp);
 	}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.MovieDTO;
+import com.app.entities.Movies;
 
 
 public interface MovieService {
@@ -24,4 +25,12 @@ public interface MovieService {
 //	MovieDTO update(MovieDTO movieDto, Long movieId)
 
 	long getTotalMoviesCount();
+
+	List<Movies> getAllMoviesAdmin();
+
+	Movies addMovie(Movies movie);
+
+	Movies updateMovie(Long movieId, Movies updatedMovie);
+
+	void deleteMovie(Long movieId);
 }

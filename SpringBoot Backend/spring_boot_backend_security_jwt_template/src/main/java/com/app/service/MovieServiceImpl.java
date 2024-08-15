@@ -119,8 +119,33 @@ public class MovieServiceImpl implements MovieService {
 //	        return mapper.map(product, ProductDto.class);
 //	    }
 	 
+	@Override
+	public List<Movies> getAllMoviesAdmin() {
+        return movieRepo.findByIsDeletedFalse();
+    }
+	@Override
+    public Movies addMovie(Movies movie) {
+        return movieRepo.save(movie);
+    }
 	 
-	 
+	@Override
+    public Movies updateMovie(Long movieId, Movies updatedMovie) {
+        Movies existingMovie = movieRepo.findById(movieId)
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+        existingMovie.setMName(updatedMovie.getMName());
+        existingMovie.setMDescription(updatedMovie.getMDescription());
+        existingMovie.setMRating(updatedMovie.getMRating());
+        existingMovie.setImagePath(updatedMovie.getImagePath());
+        existingMovie.setMovieImageName(updatedMovie.getMovieImageName());
+        return movieRepo.save(existingMovie);
+    }
+	@Override
+    public void deleteMovie(Long movieId) {
+        Movies movie = movieRepo.findById(movieId)
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+        movie.setIsDeleted(true);
+        movieRepo.save(movie);
+    }
 	 
 	 
 	 

@@ -11,11 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.dto.ImageResponse;
 import com.app.dto.MovieDTO;
 import com.app.dto.PaginatedMoviesResponse;
+import com.app.entities.Movies;
 import com.app.service.FileService;
 import com.app.service.MovieService;
 
@@ -127,11 +132,37 @@ public class MoviesImageTestController {
  	// get movie by id
  	
  	@GetMapping("/{movieId}")
-    public ResponseEntity<MovieDTO> getProduct(@PathVariable Long movieId) {
+    public ResponseEntity<MovieDTO> getMovies(@PathVariable Long movieId) {
  		MovieDTO moviedto = mservice.get(movieId);
         return new ResponseEntity<>(moviedto, HttpStatus.OK);
     }
     
-    
+ 	@GetMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Movies>> getAllMovies() {
+        List<Movies> movies = mservice.getAllMoviesAdmin();
+        return ResponseEntity.ok(movies);
+    }
+
+    @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Movies> addMovie(@RequestBody Movies movie) {
+        Movies addedMovie = mservice.addMovie(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedMovie);
+    }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Movies> updateMovie(@PathVariable Long id, @RequestBody Movies movie) {
+        Movies updatedMovie = mservice.updateMovie(id, movie);
+        return ResponseEntity.ok(updatedMovie);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
+    	mservice.deleteMovie(id);
+        return ResponseEntity.noContent().build();
+    }
     
 }

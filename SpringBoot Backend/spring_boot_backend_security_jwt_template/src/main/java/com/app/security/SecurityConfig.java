@@ -1,17 +1,22 @@
 package com.app.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity//to enable spring sec frmwork support
@@ -22,6 +27,9 @@ public class SecurityConfig {
 	//dep : pwd encoder
 	@Autowired
 	private PasswordEncoder enc;
+	
+	@Autowired
+	private BCryptPasswordEncoder benc;
 	//dep : custom jwt auth filter
 	@Autowired
 	private JwtAuthenticationFilter jwtFilter;
@@ -29,7 +37,8 @@ public class SecurityConfig {
 	@Autowired
 	private CustomAuthenticationEntryPoint authEntry;
 	
-	
+	@Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
 	@Bean
 	public SecurityFilterChain authorizeRequests(HttpSecurity http) throws Exception
 	{
@@ -46,10 +55,12 @@ public class SecurityConfig {
 		// only required for JS clnts (react / angular) : for the pre flight requests
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
 		.antMatchers("/moviestest/**").hasRole("USER")
-		.antMatchers("/moviestest/add").hasRole("ADMIN")
+		.antMatchers("/moviestest/add", "/movies/update/**", "/movies/delete/**").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
-		//to tell spring sec : not to use HttpSession to store user's auth details
+		.formLogin()
+        .successHandler(successHandler)  // Use the custom success handler
+        .and()//to tell spring sec : not to use HttpSession to store user's auth details
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
@@ -65,4 +76,44 @@ public class SecurityConfig {
 	{
 		return config.getAuthenticationManager();
 	}
+	
+	@Autowired
+    private UserDetailsService userDetailsService;
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//	    auth.userDetailsService(userDetailsService)
+//	        .passwordEncoder(passwordEncoder());
+//	}
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService)
+//            .passwordEncoder(passwordEncoder());
+//    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeRequests()
+//            .antMatchers("/admin/**").hasRole("ADMIN")
+//            .antMatchers("/user/**").hasRole("USER")
+//            .anyRequest().authenticated()
+//            .and()
+//            .formLogin()
+//            .loginPage("/login")
+//            .successHandler(customAuthenticationSuccessHandler())  // Custom success handler
+//            .permitAll()
+//            .and()
+//            .logout()
+//            .permitAll();
+//    }
+//    
+//    @Bean
+//    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+//        return new CustomAuthenticationSuccessHandler();
+//    }
+    
+    
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }

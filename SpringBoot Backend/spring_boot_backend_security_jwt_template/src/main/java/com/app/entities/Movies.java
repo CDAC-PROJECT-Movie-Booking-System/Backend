@@ -2,6 +2,8 @@
 package com.app.entities;
 
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -26,6 +28,9 @@ public class Movies extends BaseEntity {
     private int mRating;
     private String imagePath;
     private String movieImageName;
+    
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false; // Default to false
     
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<ShowtimesEntity> showTimes;
