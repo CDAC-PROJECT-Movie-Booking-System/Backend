@@ -27,6 +27,8 @@ public class ShowtimesController {
         List<SeatDTO> seats = showtimesService.getSeatsForShowtime(movieId, showtimeId);
         return ResponseEntity.ok(seats);
     }
+    
+    
 }
 
 
