@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -63,6 +64,12 @@ public class GlobalExceptionHandler {
 		    public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
 		        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
 		                .body("Content type not supported: " + ex.getContentType());
+		    }
+		    
+		    @ExceptionHandler(UsernameNotFoundException.class)
+		    public ResponseEntity<?> handleHttpMediaTypeNotSupportedException(UsernameNotFoundException ex) {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+		                .body(new ApiResponse(ex.getMessage()));
 		    }
 		
 

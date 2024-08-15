@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +26,15 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper mapper;
 
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 	@Override
-	public ApiResponse userRegistration(Signup signup) {
-		UserEntity user = mapper.map(signup, UserEntity.class);
-
-		userRepository.save(user);
-		//UserEntity user1=new UserEntity();
-
-		return new ApiResponse("success");
+	public Signup userRegistration(Signup reqDTO) {
+		//dto --> entity
+		UserEntity user=mapper.map(reqDTO, UserEntity.class);
+		user.setPassword(encoder.encode(user.getPassword()));//pwd : encrypted using SHA
+		return mapper.map(userRepository.save(user), Signup.class);
 	}
 
 

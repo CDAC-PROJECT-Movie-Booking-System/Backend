@@ -1,5 +1,13 @@
-// ShowtimesService.java
 package com.app.service;
+
+import com.app.dto.SeatDTO; 
+import com.app.entities.SeatEntity;
+import com.app.entities.ShowtimesEntity;
+import com.app.repository.ShowtimesRepository;
+
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,10 +17,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dto.SeatDTO;
 import com.app.dto.ShowtimeRequestDTO;
-import com.app.entities.ShowtimesEntity;
-import com.app.repository.ShowtimesRepository;
 
 @Service
 @Transactional

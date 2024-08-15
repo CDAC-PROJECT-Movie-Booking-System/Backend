@@ -12,11 +12,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SigninResponse {
-//	private String jwt;
+	private String jwt;
 	private Long id;
 	private String firstName;
 	private String lastName;
 	private String email;	
 	private UserRole role;
 	private String message;
+	public SigninResponse(String jwt, String message) {
+		super();
+		this.jwt = jwt;
+		this.message = message;
+	}
+	
+	
 }
