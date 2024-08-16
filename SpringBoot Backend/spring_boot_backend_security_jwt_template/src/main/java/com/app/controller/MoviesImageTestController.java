@@ -138,7 +138,7 @@ public class MoviesImageTestController {
     }
     
  	@GetMapping
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Movies>> getAllMovies() {
         List<Movies> movies = mservice.getAllMoviesAdmin();
         return ResponseEntity.ok(movies);
