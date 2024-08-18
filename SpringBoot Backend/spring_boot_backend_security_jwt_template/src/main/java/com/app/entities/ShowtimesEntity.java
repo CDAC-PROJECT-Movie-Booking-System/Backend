@@ -13,8 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.app.service.LocalTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +33,9 @@ import lombok.ToString;
 @ToString(exclude = {"movie", "showTimes"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ShowtimesEntity extends BaseEntity {
-
+//	@JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime showStartTime;
+//	@JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime showEndTime;
     private LocalDate showDate;
     

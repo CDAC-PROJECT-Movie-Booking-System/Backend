@@ -21,8 +21,8 @@ public class SeatServiceImpl implements SeatService {
     }
 
     // Get a seat by seatNo and showtime
-    public SeatEntity getSeatBySeatNoAndShowtime(int seatNo, ShowtimesEntity showtime) {
-        return seatRepository.findBySeatNoAndShowtime(seatNo, showtime);
+    public List<SeatEntity> getSeatByIdAndShowtime(List<Long> id, ShowtimesEntity showtime) {
+        return seatRepository.findByIdInAndShowtime(id, showtime);
     }
     
     //Update seats
