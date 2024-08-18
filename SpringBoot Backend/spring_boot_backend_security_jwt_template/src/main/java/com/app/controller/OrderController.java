@@ -3,6 +3,7 @@ package com.app.controller;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,10 @@ import com.razorpay.RazorpayException;
 @RequestMapping("/order")
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
-	
+	@Value("${razorpay.key.id}")
+	private String razorpayId ;
+	@Value("${razorpay.key.secret}")
+	private String razorpaySecret;
 	@ResponseBody
 	@PostMapping
 	public String createOrder(@RequestBody Map<String, Object> data) {
@@ -27,7 +31,7 @@ public class OrderController {
 			System.out.println(amount);
 			Order order = null;
 			try {
-			RazorpayClient razorpay = new RazorpayClient("rzp_test_424E58xpMxZkTG", "HP2dR8Q6U6EWCjUozI9J5bMD");
+			RazorpayClient razorpay = new RazorpayClient(razorpayId, razorpaySecret);
 			JSONObject orderRequest = new JSONObject();
 			orderRequest.put("amount",amount*100);
 			orderRequest.put("currency","INR");

@@ -1,6 +1,15 @@
 package com.app.service;
 
-import com.app.entities.Booking;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.entities.BookingEntity;
 import com.app.entities.SeatEntity;
 import com.app.entities.ShowtimesEntity;
 import com.app.entities.UserEntity;
@@ -8,12 +17,6 @@ import com.app.repository.BookingRepository;
 import com.app.repository.SeatRepository;
 import com.app.repository.ShowtimesRepository;
 import com.app.repository.UserEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -32,7 +35,7 @@ public class BookingServiceImpl implements BookingService {
     private UserEntityRepository userRepository;
 
     @Override
-    public Booking bookSeats(Long userId, List<Integer> seatNos, Long movieId, Long showtimeId) {
+    public BookingEntity bookSeats(Long userId, List<Long> id, Long movieId, Long showtimeId, int totalPrice) {
         // Fetch the user
         Optional<UserEntity> userOpt = userRepository.findById(userId);
         if (!userOpt.isPresent()) {
@@ -48,8 +51,8 @@ public class BookingServiceImpl implements BookingService {
         ShowtimesEntity showtime = showtimeOpt.get();
 
         // Fetch and validate seats
-        List<SeatEntity> seats = seatRepository.findBySeatNoInAndShowtime(seatNos, showtime);
-        if (seats.size() != seatNos.size()) {
+        List<SeatEntity> seats = seatRepository.findByIdInAndShowtime(id, showtime);
+        if (seats.size() != id.size()) {
             throw new RuntimeException("Some seats not found");
         }
 
@@ -63,8 +66,11 @@ public class BookingServiceImpl implements BookingService {
         seatRepository.saveAll(seats);
 
         // Create booking
-        Booking booking = new Booking();
+        BookingEntity booking = new BookingEntity();
         booking.setUser(user);
+        booking.setShowtime(showtime);
+        booking.setBookingDate(LocalDateTime.now()); // Set the booking date to the current time
+        booking.setTotalPrice(totalPrice);
         bookingRepository.save(booking);
 
         return booking;

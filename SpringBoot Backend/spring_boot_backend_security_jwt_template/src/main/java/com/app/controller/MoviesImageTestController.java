@@ -72,26 +72,7 @@ public class MoviesImageTestController {
 
     }
     
-    
- // 8. Pagination demo
- 	// Get all emps , paginated
- 	// http://host:port/employees , method=GET
- 	// req params : pageNumber , def val 0 , optional
- 	// pageSize : def val 3 , optional
-
-// 	@GetMapping
-// 	(value="/pagenumber/{pageNumber}")
-// 	public ResponseEntity<?> getAllEmpsPaginated(
-//// 			@RequestParam(defaultValue = "0", required = false) int pageNumber,
-// 			@PathVariable(required = false) int pageNumber,
-// 			@RequestParam(defaultValue = "4", required = false) int pageSize) {
-// 		System.out.println("in get all emps " + pageNumber + " " + pageSize);
-// 		List<MovieDTO> list = mservice.getAllMovies(pageNumber, pageSize);
-// 		if (list.isEmpty())
-// 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-// 		// emps found
-// 		return ResponseEntity.ok(list);
-// 	}
+   
  	@GetMapping(value = "/pagenumber/{pageNumber}")
  	public ResponseEntity<?> getAllEmpsPaginated(
  	        @PathVariable(required = false) int pageNumber,
@@ -138,14 +119,14 @@ public class MoviesImageTestController {
     }
     
  	@GetMapping
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Movies>> getAllMovies() {
         List<Movies> movies = mservice.getAllMoviesAdmin();
         return ResponseEntity.ok(movies);
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Movies> addMovie(@RequestBody Movies movie) {
         Movies addedMovie = mservice.addMovie(movie);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedMovie);
@@ -159,7 +140,7 @@ public class MoviesImageTestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
     	mservice.deleteMovie(id);
         return ResponseEntity.noContent().build();
