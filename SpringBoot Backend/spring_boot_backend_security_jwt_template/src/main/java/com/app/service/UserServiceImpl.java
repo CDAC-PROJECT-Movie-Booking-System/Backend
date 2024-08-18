@@ -27,7 +27,8 @@ import com.app.security.JwtUtils;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserEntityRepository userRepository;
-
+	@Autowired
+	private EmailSenderService senderService;
 	@Autowired
 	private ModelMapper mapper;
 	@Autowired
@@ -37,11 +38,39 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder encoder;
 	@Autowired
     private AuthenticationManager authMgr;
+	
+	
+	public void sendRegistrationConfirmation(UserEntity user) {
+	    String email = user.getEmail();
+	    String subject = "Welcome to MovieMagic!";
+	    String body = String.format(
+	            "<html>" +
+	            "<body style='font-family: Arial, sans-serif; color: #333;'>" +
+	            "<div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;'>" +
+	            "<h2 style='color: #2a2a2a;'>Welcome to MovieMagic, %s %s!</h2>" +
+	            "<p style='font-size: 16px;'>Thank you for registering on <strong>MovieMagic</strong>! We're thrilled to have you join our movie booking community.</p>" +
+	            "<p style='font-size: 16px;'>You can now explore the latest movies, book your favorite seats, and enjoy a fantastic cinema experience.</p>" +
+	            "<p style='font-size: 16px;'>If you have any questions, feel free to contact our support team. We’re here to help you!</p>" +
+	            "<p style='font-size: 16px;'>Best regards,<br/>The MovieMagic Team</p>" +
+	            "<footer style='margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 12px; color: #888;'>MovieMagic Inc.,Pune <br/></footer>" +
+	            "</div>" +
+	            "</body>" +
+	            "</html>",
+	            user.getFirstName(),
+	            user.getLastName()
+	        );
+
+	    senderService.sendHtmlEmail(email, subject, body);
+	}
 	@Override
 	public Signup userRegistration(Signup reqDTO) {
 		//dto --> entity
 		UserEntity user=mapper.map(reqDTO, UserEntity.class);
 		user.setPassword(encoder.encode(user.getPassword()));//pwd : encrypted using SHA
+//		senderService.sendSimpleEmail(user.getEmail(),
+//				"This is email body",
+//				"This is email subject");
+		sendRegistrationConfirmation(user);
 		return mapper.map(userRepository.save(user), Signup.class);
 	}
 
