@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +24,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"showTimes"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Movies extends BaseEntity {
     
     private String mName;
@@ -33,5 +39,7 @@ public class Movies extends BaseEntity {
     private Boolean isDeleted = false; // Default to false
     
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
+//    @JsonManagedReference // This is the parent in the relationship
+//    @JsonIgnore
     private List<ShowtimesEntity> showTimes;
 }

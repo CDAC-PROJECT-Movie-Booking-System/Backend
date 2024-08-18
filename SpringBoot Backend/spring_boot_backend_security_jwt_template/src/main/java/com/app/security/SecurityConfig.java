@@ -60,13 +60,16 @@ public class SecurityConfig {
 			    "/users/signup",
 			    "/users/signin",
 			    "/v*/api-doc*/**",
-			    "/swagger-ui/**"
+			    "/swagger-ui/**",
+//			    "/moviestest"
+			    "/api/bookings"
+			    
 			).permitAll()
 		// only required for JS clnts (react / angular) : for the pre flight requests
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
 
-//		.antMatchers("/moviestest/**").hasRole("USER")
-		.antMatchers("/moviestest/add", "/movies/update/**", "/movies/delete/**").hasRole("ADMIN")
+		.antMatchers("/order","/users/getUsers").hasRole("USER")
+		.antMatchers("/admin/moviestest","/moviestest/add", "/moviestest/update/**", "/moviestest/delete/**").hasRole("ADMIN")
 
 		.anyRequest().authenticated()
 		.and()

@@ -1,21 +1,21 @@
-// // Booking.java
-// package com.app.entities;
+// Booking.java
+package com.app.entities;
 
-// import javax.persistence.*;
-// import lombok.*;
+import javax.persistence.*;
+import lombok.*;
 
-// @Entity
-// @Table(name = "bookings")
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Getter
-// @Setter
-// @ToString
-// public class Booking extends BaseEntity {
+@Entity
+@Table(name = "bookings")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class Booking extends BaseEntity {
 
-//     @ManyToOne(fetch = FetchType.LAZY)
-//     @JoinColumn(name = "user_id", nullable = false)
-//     private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
-//     // Other fields and relationships
-// }
+    // Other fields and relationships
+}

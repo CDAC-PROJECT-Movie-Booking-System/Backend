@@ -22,7 +22,7 @@ public class BookingSeats extends BaseEntity {
     @JoinColumn(name = "booking_id", nullable = false)
     private BookingEntity booking;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id", nullable = false)
     private SeatEntity seat;
 

@@ -27,7 +27,7 @@ import lombok.ToString;
 @ToString
 public class BookingEntity extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
     
