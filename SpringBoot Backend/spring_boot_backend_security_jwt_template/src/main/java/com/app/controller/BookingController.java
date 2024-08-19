@@ -58,7 +58,8 @@ public class BookingController {
                 booking.getUser().getFirstName() + " " + booking.getUser().getLastName(),
                 booking.getShowtime().getMovie().getMName(),
                 seatNumbers,
-                booking.getShowtime().getShowStartTime()
+                booking.getShowtime().getShowStartTime(),
+                booking.getBookingDate().toLocalDate()
             );
         }).collect(Collectors.toList());
 

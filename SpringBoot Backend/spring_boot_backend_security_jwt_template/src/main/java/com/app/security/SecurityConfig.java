@@ -68,7 +68,7 @@ public class SecurityConfig {
 		// only required for JS clnts (react / angular) : for the pre flight requests
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
 
-		.antMatchers("/order","/users/getUsers").hasRole("USER")
+		.antMatchers("/order","/users/getUsers","/api/bookings/user/**").hasRole("USER")
 		.antMatchers("/admin/moviestest","/moviestest/add", "/moviestest/update/**", "/moviestest/delete/**").hasRole("ADMIN")
 
 		.anyRequest().authenticated()
