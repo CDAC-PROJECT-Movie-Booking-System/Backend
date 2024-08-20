@@ -41,6 +41,7 @@ public class BookingServiceImpl implements BookingService {
     
     public void sendBookingConfirmation(UserEntity user, BookingEntity booking, List<SeatEntity> seats) {
         String email = user.getEmail();
+        System.out.println(email);
         String subject = "Your MovieMagic Booking Confirmation!";
         
         // Formatting the seat numbers as a comma-separated string
