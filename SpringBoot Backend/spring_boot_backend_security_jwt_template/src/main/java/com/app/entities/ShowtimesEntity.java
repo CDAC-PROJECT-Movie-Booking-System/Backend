@@ -46,5 +46,11 @@ public class ShowtimesEntity extends BaseEntity {
     
     @OneToMany(mappedBy = "showtime", fetch = FetchType.EAGER)
     private Set<SeatEntity> seats=new HashSet<>();
+    public String getFormattedShowtime() {
+        return String.format("%s, %s - %s", 
+                             showDate.toString(), 
+                             showStartTime.toString(), 
+                             showEndTime.toString());
+    }
 
 }
