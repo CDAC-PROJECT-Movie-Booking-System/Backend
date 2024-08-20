@@ -75,6 +75,14 @@ public class BookingServiceImpl implements BookingService {
         booking.setBookingDate(LocalDateTime.now()); // Set the booking date to the current time
         booking.setTotalPrice(totalPrice);
         bookingRepository.save(booking);
+        
+     // Create booking-seats relation
+        for (SeatEntity seat : seats) {
+            BookingSeats bookingSeat = new BookingSeats();
+            bookingSeat.setBooking(booking);
+            bookingSeat.setSeat(seat);
+            bookingSeatsRepository.save(bookingSeat);
+        }
 
         return booking;
     }

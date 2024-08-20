@@ -1,12 +1,11 @@
 package com.app.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,5 +16,4 @@ public class BookingDTO {
     private String movieName;
     private List<Integer> seats;
     private LocalTime showtime;
-    private LocalDate bookingDate;
 }

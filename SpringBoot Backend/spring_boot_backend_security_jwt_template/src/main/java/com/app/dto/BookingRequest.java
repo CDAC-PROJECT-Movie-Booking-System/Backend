@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BookingRequest {
 	private Long userId;
-	private List<Long> id;
+	private List<Long> seatId;
 	private Long movieId;
 	private Long showtimeId;
 	private int totalPrice;	    

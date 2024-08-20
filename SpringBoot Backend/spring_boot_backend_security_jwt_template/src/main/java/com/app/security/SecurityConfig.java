@@ -52,7 +52,7 @@ public class SecurityConfig {
 		authorizeRequests()
 		.antMatchers(
 			    "/seat/update-seats",
-//			    "/order",
+			    "/order",
 			    "/api/showtimes/**/seats",
 			    "/api/showtimes/find",
 			    "/moviestest/**",
@@ -60,14 +60,15 @@ public class SecurityConfig {
 			    "/users/signup",
 			    "/users/signin",
 			    "/v*/api-doc*/**",
-			    "/swagger-ui/**"
+			    "/swagger-ui/**",
 //			    "/moviestest"
-			    
+			    "/api/bookings"
 			    
 			).permitAll()
 		// only required for JS clnts (react / angular) : for the pre flight requests
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/order","/users/getUsers","/api/bookings/user/**","/api/bookings").hasRole("USER")
+
+		.antMatchers("/order","/users/getUsers").hasRole("USER")
 		.antMatchers("/admin/moviestest","/moviestest/add", "/moviestest/update/**", "/moviestest/delete/**").hasRole("ADMIN")
 
 		.anyRequest().authenticated()

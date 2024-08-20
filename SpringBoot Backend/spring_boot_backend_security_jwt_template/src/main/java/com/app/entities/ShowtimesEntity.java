@@ -1,3 +1,4 @@
+// ShowtimesEntity.java
 package com.app.entities;
 
 import java.time.LocalDate;

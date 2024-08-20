@@ -18,8 +18,6 @@ import com.app.dto.BookingDTO;
 import com.app.dto.BookingRequest;
 import com.app.entities.BookingEntity;
 import com.app.entities.BookingSeats;
-import com.app.dto.BookingRequest;
-import com.app.entities.BookingEntity;
 import com.app.service.BookingService;
 
 @RestController
@@ -33,12 +31,12 @@ public class BookingController {
     @PostMapping()
     public ResponseEntity<BookingEntity> bookSeats(@RequestBody BookingRequest bookingRequest) {
         Long userId = bookingRequest.getUserId();
-        List<Long> id = bookingRequest.getId();
+        List<Long> seatId = bookingRequest.getSeatId();
         Long movieId = bookingRequest.getMovieId();
         Long showtimeId = bookingRequest.getShowtimeId();
         int totalPrice = bookingRequest.getTotalPrice();
-        System.out.println(userId+" "+ id+" "+ movieId+" "+ showtimeId);
-        BookingEntity booking = bookingService.bookSeats(userId, id, movieId, showtimeId, totalPrice);
+        System.out.println(userId+" "+ seatId+" "+ movieId+" "+ showtimeId);
+        BookingEntity booking = bookingService.bookSeats(userId, seatId, movieId, showtimeId, totalPrice);
         return ResponseEntity.ok(booking);
     }
     
@@ -58,8 +56,7 @@ public class BookingController {
                 booking.getUser().getFirstName() + " " + booking.getUser().getLastName(),
                 booking.getShowtime().getMovie().getMName(),
                 seatNumbers,
-                booking.getShowtime().getShowStartTime(),
-                booking.getBookingDate().toLocalDate()
+                booking.getShowtime().getShowStartTime()
             );
         }).collect(Collectors.toList());
 
